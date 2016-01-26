@@ -1,0 +1,25 @@
+<h2>to-do list</h2>
+
+<div ng-init='main.load()' class="main col-lg-offset-3 col-lg-6">
+    <span>left {{main.remaining()}}from {{main.todos.length}}</span>
+
+    <div class="row">
+        <button class="pull-left" ng-click="main.allDone()"><i class="fa fa-check-circle"></i>All done</i></button>
+        <button class="pull-left" ng-click="main.allNotDone()"><i class="fa fa-times-circle"></i>All notdone</button>
+    </div>
+    <div class="row">
+        <ul>
+            <li ng-repeat="todo in main.todos track by $index">
+                <input class="pull-left" type="checkbox" ng-model="todo.done" ng-change="main.saveDone()">
+                <span>{{todo.text}}</span>
+                <button class="pull-right" ng-click="main.removeItem($index)"><i class="fa fa-times"></i></button>
+            </li>
+        </ul>
+        <form name="form" ng-submit="main.addTodo()">
+            <input type="text" ng-model="main.todoText" size="30"
+                   placeholder="new to-do" required>
+            <input class="btn-primary" ng-hide="form.$invalid" type="submit" value="add">
+        </form>
+        <button ng-click="main.clearAllDone()">clear all done</button>
+    </div>
+</div>
