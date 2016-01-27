@@ -4,8 +4,6 @@ const gulp = require('gulp'),
     del = require('del'),
     babel = require('gulp-babel'),
     livereload = require('gulp-livereload'),
-    connectLiveReload = require('connect-livereload'),
-    express = require('express'),
     browserify = require('browserify'),
     babelify = require('babelify'),
     gutil = require('gutil'),
@@ -41,18 +39,18 @@ gulp.task('scripts', () => {
         packageCache: {},
         debug: true
     });
-b.transform(babelify, {presets: ['es2015']});
-b.transform(stringify);
-b.on('error', gutil.log);
-b.on('time', gutil.log);
+    b.transform(babelify, {presets: ['es2015']});
+    b.transform(stringify);
+    b.on('error', gutil.log);
+    b.on('time', gutil.log);
 
-return b.bundle()
-    .pipe(source('index.js'))
-    .pipe(buffer())
-    .pipe(ngAnnotate())
-    //.pipe(uglify())
-    .pipe(gulp.dest('dist/js'))
-    .pipe(livereload());
+    return b.bundle()
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        .pipe(ngAnnotate())
+        //.pipe(uglify())
+        .pipe(gulp.dest('dist/js'))
+        .pipe(livereload());
 });
 
 gulp.task('scripts:hint', () => {
@@ -71,10 +69,10 @@ gulp.task('clean', () => {
     del(['dist'], cb);
 });
 
-gulp.task('watch', ['build', 'serve'], () => {
+gulp.task('watch', ['build'], () => {
     livereload.listen();
 
-gulp.watch('app/index.html', ['html']);
-gulp.watch(['app/js/**/*.js', 'app/partials/**/*'], ['scripts', 'scripts:hint']);
-gulp.watch('app/styles/*.less', ['styles']);
+    gulp.watch('app/index.html', ['html']);
+    gulp.watch(['app/js/**/*.js', 'app/partials/**/*'], ['scripts', 'scripts:hint']);
+    gulp.watch('app/styles/*.less', ['styles']);
 });
